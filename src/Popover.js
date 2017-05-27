@@ -1,29 +1,29 @@
 // @flow
-import React, {Component} from "react"
+import React, { Component } from "react"
 import ReactDOM from "react-dom"
 
 type Props = {
-    element: HTMLElement,
-    parent: HTMLElement,
-    placement: string | Array<string>,
-    open: boolean,
-    classes: string | Array<string> | null,
-    left_cushion: ?number,
-    top_cushion: ?number,
-    children: Array<Element>
+    element : HTMLElement,
+    parent : HTMLElement,
+    placement : string | Array<string>,
+    open : boolean,
+    classes : string | Array<string> | null,
+    left_cushion : ?number,
+    top_cushion : ?number,
+    children : Array<Element>
 }
 
 type Coordinate = {
-    top: number,
-    left: number
+    top : number,
+    left : number
 }
 
 export default class Popover extends Component {
 
-    state: Object
+    state : Object
 
-    constructor(props: Props) {
-        super(props)
+    constructor ( props : Props ) {
+        super( props )
         this.state = {
             element     : props.element,
             parent      : props.parent,
@@ -41,23 +41,27 @@ export default class Popover extends Component {
     }
 
 
-    getClassNames(): string {
+    /**
+     *
+     * @returns {*}
+     */
+    getClassNames () : string {
 
-        const base: string                      = this.getBaseClass()
-        const placement: string | Array<string> = this.props.placement
+        const base : string                      = this.getBaseClass()
+        const placement : string | Array<string> = this.props.placement
         if (typeof placement === "string") {
-            return this.evaluateClassName(base, placement)
+            return this.evaluateClassName( base, placement )
         }
-        if (Array.isArray(placement)) {
-            return placement.reduce((carry: string, position: string) => {
-                return this.evaluateClassName(carry, position)
-            }, base)
+        if (Array.isArray( placement )) {
+            return placement.reduce( ( carry : string, position : string ) => {
+                return this.evaluateClassName( carry, position )
+            }, base )
         }
 
         return base
     }
 
-    evaluateClassName(base: string, position: string): string {
+    evaluateClassName ( base : string, position : string ) : string {
         switch (position) {
             case "auto":
                 return `${base} ${this.getAutoClasses()}`
@@ -82,15 +86,15 @@ export default class Popover extends Component {
      *
      * @returns {string}
      */
-    getBaseClass(): string {
+    getBaseClass () : string {
 
         if (typeof this.props.classes === "string") {
             return `${this.props.classes} Tooltip`
         }
-        else if (Array.isArray(this.props.classes)) {
-            return this.props.classes.reduce((carry: string, item: string) => {
+        else if (Array.isArray( this.props.classes )) {
+            return this.props.classes.reduce( ( carry : string, item : string ) => {
                     return `${carry} ${item}`
-                }, "") + " Tooltip"
+                }, "" ) + " Tooltip"
         }
 
         return "Tooltip "
@@ -100,7 +104,7 @@ export default class Popover extends Component {
      *
      * @returns {string}
      */
-    getAutoClasses(): string {
+    getAutoClasses () : string {
         const half_window_height = window.innerHeight / 2
         const half_window_width  = window.innerWidth / 2
         const element_rect       = this.state.element_rect
@@ -120,7 +124,7 @@ export default class Popover extends Component {
      *
      * @returns {{left: number, top: number, right: number, bottom: number, width: Number, height: Number}}
      */
-    getViewportDimensions(): Object {
+    getViewportDimensions () : Object {
         const parent         = this.state.parent
         const element_rect   = this.state.element_rect
         const container_rect = this.state.parent_rect
@@ -141,7 +145,7 @@ export default class Popover extends Component {
             }
         }
 
-        throw new Error("Get the ClientRect object from the container and the element first!")
+        throw new Error( "Get the ClientRect object from the container and the element first!" )
     }
 
 
@@ -149,7 +153,7 @@ export default class Popover extends Component {
      *
      * @returns {{top: number, left: number}}
      */
-    getCenteredStyles(): Coordinate {
+    getCenteredStyles () : Coordinate {
         const viewport     = this.getViewportDimensions()
         const tooltip      = this.state.tooltip
         const element_rect = this.state.element_rect
@@ -161,10 +165,10 @@ export default class Popover extends Component {
             }
         }
 
-        throw new Error("Attempted to position element prior the the element mounting")
+        throw new Error( "Attempted to position element prior the the element mounting" )
     }
 
-    auto(): Coordinate {
+    auto () : Coordinate {
         const half_window_height = window.innerHeight / 2
         const half_window_width  = window.innerWidth / 2
         const element_rect       = this.state.element_rect
@@ -173,13 +177,13 @@ export default class Popover extends Component {
             const horizontal = element_rect.left > half_window_width ? this.left : this.right
             const vertical   = element_rect.top > half_window_height ? this.above : this.below
 
-            return this.combinePositions([horizontal, vertical])
+            return this.combinePositions( [ horizontal, vertical ] )
         }
 
-        throw new Error("element_rect must be an instance of ClientRect!")
+        throw new Error( "element_rect must be an instance of ClientRect!" )
     }
 
-    above(): Coordinate {
+    above () : Coordinate {
         const tooltip = this.state.tooltip
         const element = this.state.element
         const cushion = this.state.top_cushion
@@ -193,10 +197,10 @@ export default class Popover extends Component {
             }
         }
 
-        throw new Error("tooltip is not an instance of htmlelement")
+        throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
-    below(): Coordinate {
+    below () : Coordinate {
 
         const centered = this.getCenteredStyles()
         const tooltip  = this.state.tooltip
@@ -211,10 +215,10 @@ export default class Popover extends Component {
             }
         }
 
-        throw new Error("tooltip is not an instance of htmlelement")
+        throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
-    left(): Coordinate {
+    left () : Coordinate {
         const centered = this.getCenteredStyles()
         const tooltip  = this.state.tooltip
         const element  = this.state.element
@@ -228,10 +232,10 @@ export default class Popover extends Component {
             }
         }
 
-        throw new Error("tooltip is not an instance of htmlelement")
+        throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
-    right(): Coordinate {
+    right () : Coordinate {
         const centered = this.getCenteredStyles()
         const tooltip  = this.state.tooltip
         const element  = this.state.element
@@ -244,10 +248,10 @@ export default class Popover extends Component {
             }
         }
 
-        throw new Error("tooltip is not an instance of htmlelement")
+        throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
-    elementLeft(): Coordinate {
+    elementLeft () : Coordinate {
         const centered = this.getCenteredStyles()
         const tooltip  = this.state.tooltip
         const element  = this.state.element
@@ -263,10 +267,10 @@ export default class Popover extends Component {
             }
         }
 
-        throw new Error("tooltip is not an instance of htmlelement")
+        throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
-    elementRight(): Coordinate {
+    elementRight () : Coordinate {
         const centered = this.getCenteredStyles()
         const tooltip  = this.state.tooltip
         const element  = this.state.element
@@ -282,30 +286,30 @@ export default class Popover extends Component {
             }
         }
 
-        throw new Error("tooltip is not an instance of htmlelement")
+        throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
 
-    combinePositions(positions: Array<any>): Coordinate {
-        const centered: Coordinate = this.getCenteredStyles()
-        const coordinates          = positions.map(position => {
+    combinePositions ( positions : Array<any> ) : Coordinate {
+        const centered : Coordinate = this.getCenteredStyles()
+        const coordinates           = positions.map( position => {
 
             if (typeof position === "function") {
-                return position.call(this)
+                return position.call( this )
             }
 
-            return this.evaluatePlacement(position)
-        })
+            return this.evaluatePlacement( position )
+        } )
 
-        return coordinates.reduce((carry: Coordinate, style: Coordinate) => {
+        return coordinates.reduce( ( carry : Coordinate, style : Coordinate ) => {
             return {
                 top : style.top !== centered.top ? style.top : carry.top,
                 left: style.left !== centered.left ? style.left : carry.left,
             }
-        }, Object.assign({}, centered))
+        }, Object.assign( {}, centered ) )
     }
 
-    evaluatePlacement(position: string): Object {
+    evaluatePlacement ( position : string ) : Object {
         switch (position) {
             case "auto":
                 return this.auto()
@@ -330,19 +334,19 @@ export default class Popover extends Component {
      *
      * @returns {{top, left}|*}
      */
-    getStyle(): Object {
+    getStyle () : Object {
         if (typeof this.props.placement === "string") {
-            return this.evaluatePlacement(this.props.placement)
+            return this.evaluatePlacement( this.props.placement )
         }
-        if (Array.isArray(this.props.placement)) {
-            return this.combinePositions(this.props.placement)
+        if (Array.isArray( this.props.placement )) {
+            return this.combinePositions( this.props.placement )
         }
 
-        throw new Error("placement was not defined correctly on popover")
+        throw new Error( "placement was not defined correctly on popover" )
     }
 
-    componentWillReceiveProps(props: Props) {
-        this.setState({
+    componentWillReceiveProps ( props : Props ) {
+        this.setState( {
             element     : props.element,
             parent      : props.parent,
             element_rect: props.element.getBoundingClientRect(),
@@ -352,21 +356,21 @@ export default class Popover extends Component {
             top_cushion : props.top_cushion || 0,
             left_cushion: props.left_cushion || 0,
             placement   : props.placement
-        })
+        } )
     }
 
 
-    componentDidMount() {
-        this.setState({
-            tooltip: ReactDOM.findDOMNode(this)
-        })
+    componentDidMount () {
+        this.setState( {
+            tooltip: ReactDOM.findDOMNode( this )
+        } )
     }
 
-    render() {
+    render () {
         if (this.state.open) {
 
             return (
-                <div className = {this.getClassNames()} style = {this.getStyle()}>
+                <div className = {this.getClassNames() + " visible"} style = {this.getStyle()}>
                     {this.props.children}
                 </div>
             )
