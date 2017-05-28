@@ -1,11 +1,11 @@
 ![Alt text](/example/react-popover.gif?raw=true "Demo")
 
-# Why this tooltip library?
+# Why this positioning library?
 
-Many tooltip libraries in an effort to be simple assume static positioning and have no sense of the container they get
+Many positioning libraries in an effort to be simple assume static positioning and have no sense of the container they get
 appended to (often the document's body). 
 
-I wanted to build a tooltip class that could handle relative and absolute positioned
+I wanted to build a positioning component that could handle relative and absolute positioned
 containers, could scroll with its container, could be used as a general-purpose positioning mechanism, and was dead-simple
 to use.
 
