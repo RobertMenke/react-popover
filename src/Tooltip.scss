@@ -18,9 +18,12 @@ $success : #81C784;
   box-shadow         : 0 0 3px 0 rgba(50, 50, 50, 0.4);
 }
 
-.Tooltip.visible {
-  -webkit-animation: fadeInDown 0.2s cubic-bezier(0.2, 0.7, 0.9, 0.4);
-}
+// To add an animation when the popover/tooltip becomes visible,
+// add the animation to the visible class
+//
+//.Tooltip.visible {
+//  -webkit-animation: fadeInDown 0.2s cubic-bezier(0.2, 0.7, 0.9, 0.4);
+//}
 
 .Tooltip:after {
   position : absolute;

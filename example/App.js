@@ -1,32 +1,36 @@
 import React, { Component } from 'react';
-import Popover from "./Popover"
+import Popover from "./../dist/Popover"
 
 class App extends Component {
 
-    state = {
-        top_left    : false,
-        top_right   : false,
-        bottom_left : false,
-        bottom_right: false,
-        top         : false,
-        bottom      : false,
-        left        : false,
-        right       : false,
-        center_left : false,
-        center_right: false,
-        elements : {
-            top_left    : undefined,
-            top_right   : undefined,
-            bottom_left : undefined,
-            bottom_right: undefined,
-            top         : undefined,
-            bottom      : undefined,
-            left        : undefined,
-            right       : undefined,
-            center_left : undefined,
-            center_right: undefined
-        }
+    constructor(props) {
+        super(props)
+        this.state = {
+                top_left    : false,
+                top_right   : false,
+                bottom_left : false,
+                bottom_right: false,
+                top         : false,
+                bottom      : false,
+                left        : false,
+                right       : false,
+                center_left : false,
+                center_right: false,
+                elements : {
+                    top_left    : undefined,
+                    top_right   : undefined,
+                    bottom_left : undefined,
+                    bottom_right: undefined,
+                    top         : undefined,
+                    bottom      : undefined,
+                    left        : undefined,
+                    right       : undefined,
+                    center_left : undefined,
+                    center_right: undefined
+                }
+            }
     }
+
 
   render() {
         const elements = this.state.elements
