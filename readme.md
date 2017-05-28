@@ -69,6 +69,22 @@ Every placement option has a corollary css class that gets applied, so that you 
  auto           = autoplace
 ```
 
+# Props
+
+It may be helpful to look at the flow type definition for the component's props
+
+```javascript
+type Props = {
+    element         : HTMLElement,
+    parent          : HTMLElement,
+    placement       : string | Array<string>,
+    open            : boolean,
+    classes         : ?string | ?Array<string>,
+    left_cushion    : ?number,
+    top_cushion     : ?number,
+    children        : Array<Element>
+}
+```
 # Dependencies
 
 For obvious reasons:
