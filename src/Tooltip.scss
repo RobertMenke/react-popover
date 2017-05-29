@@ -32,7 +32,7 @@ $success : #81C784;
 }
 
 .Tooltip.TooltipAbove:after {
-  bottom             : -7px;
+  bottom             : -8px;
   height             : 14px;
   width              : 14px;
   left               : calc(50% - 7px);
@@ -47,7 +47,7 @@ $success : #81C784;
 }
 
 .Tooltip.TooltipBelow:after {
-  top                : -7px;
+  top                : -8px;
   height             : 14px;
   width              : 14px;
   left               : calc(50% - 7px);
@@ -62,7 +62,7 @@ $success : #81C784;
 }
 
 .Tooltip.TooltipLeft:after {
-  right              : -7px;
+  right              : -8px;
   height             : 14px;
   width              : 14px;
   top                : calc(50% - 7px);
@@ -77,7 +77,7 @@ $success : #81C784;
 }
 
 .Tooltip.TooltipRight:after {
-  left               : -7px;
+  left               : -8px;
   height             : 14px;
   width              : 14px;
   top                : calc(50% - 7px);
@@ -102,7 +102,7 @@ $success : #81C784;
 }
 
 .TooltipLeft.TooltipAbove.autoplace:after, .TooltipRight.TooltipAbove.autoplace:after {
-  bottom             : -7px;
+  bottom             : -8px;
   top                : auto;
   border             : none;
   border-right       : 1px solid $success;
@@ -123,7 +123,7 @@ $success : #81C784;
 }
 
 .TooltipLeft.TooltipBelow.autoplace:after, .TooltipRight.TooltipBelow.autoplace:after {
-  top                : -7px;
+  top                : -8px;
   bottom             : auto;
   border             : none;
   border-left        : 1px solid $success;

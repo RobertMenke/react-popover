@@ -47,10 +47,10 @@ class App extends Component {
                 center_left
             } = elements
     return (
-        <div id = "wrapper" ref={c => this.container = c}>
+        <div id = "wrapper" ref="container">
             <div
                 className = "hover top left"
-                ref={c => this._top_left = c}
+                ref="top_left"
                  onMouseEnter={() => {
                     this.setState({
                         top_left : true
@@ -66,7 +66,7 @@ class App extends Component {
             </div>
             <div
                 className = "hover top right"
-                ref={c => this._top_right = c}
+                ref="top_right"
                  onMouseEnter={() => {
                     this.setState({
                         top_right : true
@@ -82,7 +82,7 @@ class App extends Component {
             </div>
             <div
                 className = "hover bottom left"
-                ref={c => this._bottom_left = c}
+                ref="bottom_left"
                  onMouseEnter={() => {
                     this.setState({
                         bottom_left : true
@@ -98,7 +98,7 @@ class App extends Component {
             </div>
             <div
                 className = "hover bottom right"
-                ref={c => this._bottom_right = c}
+                ref="bottom_right"
                  onMouseEnter={() => {
                     this.setState({
                         bottom_right : true
@@ -114,7 +114,7 @@ class App extends Component {
             </div>
             <div
                 className = "hover top v-center js-below"
-                ref={c => this._top = c}
+                ref="top"
                  onMouseEnter={() => {
                     this.setState({
                         top : true
@@ -130,7 +130,7 @@ class App extends Component {
             </div>
             <div
                 className = "hover bottom v-center js-above"
-                ref={c => this._bottom = c}
+                ref="bottom"
                  onMouseEnter={() => {
                     this.setState({
                         bottom : true
@@ -146,7 +146,7 @@ class App extends Component {
             </div>
             <div
                 className = "hover left h-center js-right"
-                ref={c => this._left = c}
+                ref="left"
                  onMouseEnter={() => {
                     this.setState({
                         left : true
@@ -162,7 +162,7 @@ class App extends Component {
             </div>
             <div
                 className = "hover right h-center js-left"
-                ref={c => this._right = c}
+                ref="right"
                  onMouseEnter={() => {
                     this.setState({
                         right : true
@@ -178,7 +178,7 @@ class App extends Component {
             </div>
             <div
                 className = "hover center-right h-center js-alignright"
-                ref={c => this._center_right = c}
+                ref="center_right"
                  onMouseEnter={() => {
                     this.setState({
                         center_right : true
@@ -194,7 +194,7 @@ class App extends Component {
             </div>
             <div
                 className = "hover center-left h-center js-alignleft"
-                ref={c => this._center_left = c}
+                ref="center_left"
                  onMouseEnter={() => {
                     this.setState({
                         center_left : true
@@ -210,7 +210,7 @@ class App extends Component {
             </div>
 
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={top_left}
                 placement="auto"
                 open={this.state.top_left}
@@ -220,7 +220,7 @@ class App extends Component {
                 <span>I was called with placement="auto"</span>
             </Popover>
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={top_right}
                 placement="auto"
                 open={this.state.top_right}
@@ -230,7 +230,7 @@ class App extends Component {
                 <span>I was called with placement="auto"</span>
             </Popover>
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={top}
                 placement="bottom"
                 open={this.state.top}
@@ -239,7 +239,7 @@ class App extends Component {
                 <span>I was called with placement="bottom"</span>
             </Popover>
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={bottom}
                 placement="top"
                 open={this.state.bottom}
@@ -248,7 +248,7 @@ class App extends Component {
                 <span>I was called with placement="top"</span>
             </Popover>
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={right}
                 placement="left"
                 open={this.state.right}
@@ -257,7 +257,7 @@ class App extends Component {
                 <span>I was called with placement="left"</span>
             </Popover>
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={left}
                 placement="right"
                 open={this.state.left}
@@ -266,7 +266,7 @@ class App extends Component {
                 <span>I was called with placement="right"</span>
             </Popover>
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={bottom_left}
                 placement="auto"
                 open={this.state.bottom_left}
@@ -276,7 +276,7 @@ class App extends Component {
                 <span>I was called with placement="auto"</span>
             </Popover>
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={bottom_right}
                 placement="auto"
                 open={this.state.bottom_right}
@@ -286,22 +286,22 @@ class App extends Component {
                 <span>I was called with placement="auto"</span>
             </Popover>
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={center_left}
                 placement={["element_left", "bottom"]}
                 open={this.state.center_left}
                 top_cushion={10}
             >
-                <span>I was called with placement="element_left"</span>
+                <span>I was called with placement=["element_left", "bottom"]</span>
             </Popover>
             <Popover
-                parent={this.container}
+                parent={this.refs.container}
                 element={center_right}
                 placement={["element_right", "top"]}
                 open={this.state.center_right}
                 top_cushion={10}
             >
-                <span>I was called with placement="element_right"</span>
+                <span>I was called with placement=["element_right", "top"]</span>
             </Popover>
         </div>
     )
@@ -310,16 +310,16 @@ class App extends Component {
   componentDidMount() {
         this.setState({
             elements: {
-                top_left    : this._top_left,
-                top_right   : this._top_right,
-                bottom_right: this._bottom_right,
-                bottom_left : this._bottom_left,
-                top         : this._top,
-                bottom      : this._bottom,
-                left        : this._left,
-                right       : this._right,
-                center_right: this._center_right,
-                center_left : this._center_left
+                top_left    : this.refs.top_left,
+                top_right   : this.refs.top_right,
+                bottom_right: this.refs.bottom_right,
+                bottom_left : this.refs.bottom_left,
+                top         : this.refs.top,
+                bottom      : this.refs.bottom,
+                left        : this.refs.left,
+                right       : this.refs.right,
+                center_right: this.refs.center_right,
+                center_left : this.refs.center_left
             }
         })
   }

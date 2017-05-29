@@ -11,6 +11,18 @@ to use.
 
 If you like the way the library has been written, or find it useful in your own project don't forget to star it!
 
+# Installation
+
+yarn
+```
+yarn add rm-react-popover
+```
+
+npm
+```
+npm install rm-react-popover --save
+```
+
 
 # Usage
 

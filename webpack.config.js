@@ -9,14 +9,14 @@ process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
 module.exports = {
-    entry    : './src/Popover.js',
-    // entry    : './example/index.js',
+    // entry    : './src/Popover.js',
+    entry    : './example/index.js',
     output   : {
-        path    : path.resolve(__dirname, 'dist'),
-        // path    : path.resolve(__dirname, 'example'),
-        filename: 'Popover.js',
-        // filename: 'bundle.js',
-        libraryTarget : "umd"
+        // path    : path.resolve(__dirname, 'dist'),
+        path    : path.resolve(__dirname, 'example'),
+        // filename: 'Popover.js',
+        filename: 'bundle.js',
+        // libraryTarget : "umd"
     },
     // devtool  : '#inline-source-map',
     module   : {
@@ -36,12 +36,12 @@ module.exports = {
         ]
     },
     target : "web",
-    externals: ["react", "react-dom"],
-    plugins  : [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
-    ]
+    // externals: ["react", "react-dom"],
+    // plugins  : [
+    //     new webpack.optimize.UglifyJsPlugin({
+    //         compress: {
+    //             warnings: false
+    //         }
+    //     })
+    // ]
 };

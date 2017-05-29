@@ -22,6 +22,11 @@ export default class Popover extends Component {
 
     state : Object
 
+    /**
+     * The state will default mostly to uninitialized values
+     *
+     * @param props
+     */
     constructor ( props : Props ) {
         super( props )
         this.state = {
@@ -42,6 +47,8 @@ export default class Popover extends Component {
 
 
     /**
+     * Use the evaluateClassName method to make sense of an array of positions
+     * or a single, string position.
      *
      * @returns {*}
      */
@@ -61,7 +68,15 @@ export default class Popover extends Component {
         return base
     }
 
-    evaluateClassName ( base : string, position : string ) : string {
+    /**
+     * Given a position string, return a class name concatenated from some
+     * string base
+     *
+     * @param base
+     * @param position
+     * @returns {string}
+     */
+    evaluateClassName ( base : string = "", position : string ) : string {
         switch (position) {
             case "auto":
                 return `${base} ${this.getAutoClasses()}`
@@ -83,6 +98,7 @@ export default class Popover extends Component {
     }
 
     /**
+     * Get the base class. The format is always {user supplied class names} {Tooltip}.
      *
      * @returns {string}
      */
@@ -101,6 +117,8 @@ export default class Popover extends Component {
     }
 
     /**
+     * When auto-aligning a tooltip, get appropriate class names appended with
+     * a class name called autoplace to help with CSS.
      *
      * @returns {string}
      */
@@ -120,7 +138,8 @@ export default class Popover extends Component {
     }
 
     /**
-     *
+     * Figure out where the element we're sticking the tooltip resides relative
+     * to the viewport.
      *
      * @returns {{left: number, top: number, right: number, bottom: number, width: Number, height: Number}}
      */
@@ -150,8 +169,10 @@ export default class Popover extends Component {
 
 
     /**
+     * Figure out what the top and left properties look like if we want the tooltip
+     * to be dead center of the element we're sticking it to.
      *
-     * @returns {{top: number, left: number}}
+     * @returns {Coordinate}
      */
     getCenteredStyles () : Coordinate {
         const viewport     = this.getViewportDimensions()
@@ -168,6 +189,12 @@ export default class Popover extends Component {
         throw new Error( "Attempted to position element prior the the element mounting" )
     }
 
+    /**
+     * Apply an intelligent mix of left/right and above/below based on
+     * an element's position in the viewport.
+     *
+     * @returns {Coordinate}
+     */
     auto () : Coordinate {
         const half_window_height = window.innerHeight / 2
         const half_window_width  = window.innerWidth / 2
@@ -183,6 +210,11 @@ export default class Popover extends Component {
         throw new Error( "element_rect must be an instance of ClientRect!" )
     }
 
+    /**
+     * Place the tooltip above the element.
+     *
+     * @returns {{top: number, left: number}}
+     */
     above () : Coordinate {
         const tooltip = this.state.tooltip
         const element = this.state.element
@@ -200,6 +232,11 @@ export default class Popover extends Component {
         throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
+    /**
+     * Place the tooltip below the element.
+     *
+     * @returns {{top: number, left: number}}
+     */
     below () : Coordinate {
 
         const centered = this.getCenteredStyles()
@@ -218,6 +255,11 @@ export default class Popover extends Component {
         throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
+    /**
+     * Place the tooltip to the left of the element
+     *
+     * @returns {{top: number, left: number}}
+     */
     left () : Coordinate {
         const centered = this.getCenteredStyles()
         const tooltip  = this.state.tooltip
@@ -235,6 +277,11 @@ export default class Popover extends Component {
         throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
+    /**
+     * Place the tooltip to the right of the element
+     *
+     * @returns {{top: number, left: number}}
+     */
     right () : Coordinate {
         const centered = this.getCenteredStyles()
         const tooltip  = this.state.tooltip
@@ -251,6 +298,11 @@ export default class Popover extends Component {
         throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
+    /**
+     * Aligns the left side of the tooltip with the left side of the element
+     *
+     * @returns {{top: number, left: number}}
+     */
     elementLeft () : Coordinate {
         const centered = this.getCenteredStyles()
         const tooltip  = this.state.tooltip
@@ -270,6 +322,11 @@ export default class Popover extends Component {
         throw new Error( "tooltip is not an instance of htmlelement" )
     }
 
+    /**
+     * Aligns the right side of the tooltip with the right side of the element
+     *
+     * @returns {{top: number, left: number}}
+     */
     elementRight () : Coordinate {
         const centered = this.getCenteredStyles()
         const tooltip  = this.state.tooltip
@@ -290,17 +347,24 @@ export default class Popover extends Component {
     }
 
 
+    /**
+     * Given positions as an array of strings or an array of functions,
+     * combine them into a single Coordinate object we can use for
+     * placement.
+     *
+     * @param positions
+     * @returns {Coordinate}
+     */
     combinePositions ( positions : Array<any> ) : Coordinate {
         const centered : Coordinate = this.getCenteredStyles()
+        //Get the coordinates from the individual positions that were supplied
         const coordinates           = positions.map( position => {
-
-            if (typeof position === "function") {
-                return position.call( this )
-            }
-
-            return this.evaluatePlacement( position )
+            return typeof position === "function"
+                    ? position.call(this)
+                    : this.evaluatePlacement(position)
         } )
 
+        //Reduce the coordinates to a single coordinate
         return coordinates.reduce( ( carry : Coordinate, style : Coordinate ) => {
             return {
                 top : style.top !== centered.top ? style.top : carry.top,
@@ -309,7 +373,13 @@ export default class Popover extends Component {
         }, Object.assign( {}, centered ) )
     }
 
-    evaluatePlacement ( position : string ) : Object {
+    /**
+     * Based on a single placement string, return a Coordinate.
+     *
+     * @param position
+     * @returns {Coordinate}
+     */
+    evaluatePlacement ( position : string ) : Coordinate {
         switch (position) {
             case "auto":
                 return this.auto()
@@ -331,10 +401,12 @@ export default class Popover extends Component {
     }
 
     /**
+     * Get the style that will be applied to the tooltip, or throw an
+     * error if placement is undefined
      *
-     * @returns {{top, left}|*}
+     * @returns {Coordinate}
      */
-    getStyle () : Object {
+    getStyle () : Coordinate {
         if (typeof this.props.placement === "string") {
             return this.evaluatePlacement( this.props.placement )
         }
@@ -345,6 +417,11 @@ export default class Popover extends Component {
         throw new Error( "placement was not defined correctly on popover" )
     }
 
+    /**
+     * Update all of our state when the next props are ready
+     *
+     * @param props
+     */
     componentWillReceiveProps ( props : Props ) {
         this.setState( {
             element     : props.element,
@@ -360,6 +437,9 @@ export default class Popover extends Component {
     }
 
 
+    /**
+     * When the component mounts, set a reference to its own DOM node
+     */
     componentDidMount () {
         this.setState( {
             tooltip: ReactDOM.findDOMNode( this )
@@ -367,15 +447,15 @@ export default class Popover extends Component {
     }
 
     render () {
+        //When open, apply styles and add the class name visible
         if (this.state.open) {
-
             return (
                 <div className = {this.getClassNames() + " visible"} style = {this.getStyle()}>
                     {this.props.children}
                 </div>
             )
         }
-
+        //when closed, don't apply the class name visible, and it's only applied style should be hidden
         return (
             <div
                 className = {this.getClassNames()} style = {{visibility: "hidden"}}>
