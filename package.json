@@ -2,6 +2,7 @@
   "name": "rm-react-popover",
   "description": "A general-purpose positioning library that can applied to tooltips, popovers, and menus",
   "version": "0.2.0",
+  "main": "./dist/Popover.js",
   "keywords": ["popover", "menu", "tooltip", "react"],
   "license": "MIT",
   "author" : "Robert Menke",
