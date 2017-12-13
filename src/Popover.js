@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
+import { isDOMRect } from './utils'
 
 type Props = {
     element : HTMLElement,
@@ -127,7 +128,7 @@ export default class Popover extends Component {
         const half_window_width  = window.innerWidth / 2
         const element_rect       = this.state.element_rect
 
-        if (element_rect instanceof ClientRect) {
+        if (isDOMRect(element_rect)) {
             const horizontal = element_rect.left > half_window_width ? 'TooltipRight' : 'TooltipLeft'
             const vertical   = element_rect.top > half_window_height ? 'TooltipAbove' : 'TooltipBelow'
 
@@ -148,7 +149,7 @@ export default class Popover extends Component {
         const element_rect   = this.state.element_rect
         const container_rect = this.state.parent_rect
 
-        if (element_rect instanceof ClientRect && container_rect instanceof ClientRect) {
+        if (isDOMRect(element_rect) && isDOMRect(container_rect)) {
             const left   = element_rect.left - container_rect.left + parent.scrollLeft
             const top    = element_rect.top - container_rect.top + parent.scrollTop
             const right  = element_rect.right - container_rect.right
@@ -179,7 +180,7 @@ export default class Popover extends Component {
         const tooltip      = this.state.tooltip
         const element_rect = this.state.element_rect
 
-        if (tooltip instanceof HTMLElement && element_rect instanceof ClientRect) {
+        if (tooltip instanceof HTMLElement && isDOMRect(element_rect)) {
             return {
                 top : viewport.top - (tooltip.offsetHeight / 2) + (element_rect.height / 2),
                 left: viewport.left - (tooltip.offsetWidth / 2) + (element_rect.width / 2)
@@ -200,7 +201,7 @@ export default class Popover extends Component {
         const half_window_width  = window.innerWidth / 2
         const element_rect       = this.state.element_rect
 
-        if (element_rect instanceof ClientRect) {
+        if (isDOMRect(element_rect)) {
             const horizontal = element_rect.left > half_window_width ? this.left : this.right
             const vertical   = element_rect.top > half_window_height ? this.above : this.below
 
