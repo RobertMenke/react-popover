@@ -165,7 +165,7 @@ export default class Popover extends Component {
             }
         }
 
-        throw new Error( "Get the ClientRect object from the container and the element first!" )
+        throw new Error( "Get the DOMRect object from the container and the element first!" )
     }
 
 
@@ -208,7 +208,7 @@ export default class Popover extends Component {
             return this.combinePositions( [ horizontal, vertical ] )
         }
 
-        throw new Error( "element_rect must be an instance of ClientRect!" )
+        throw new Error( "element_rect must be an instance of DOMRect!" )
     }
 
     /**

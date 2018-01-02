@@ -1,9 +1,9 @@
 {
   "name": "rm-react-popover",
   "description": "A general-purpose positioning library that can applied to tooltips, popovers, and menus",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "main": "./dist/Popover.js",
-  "keywords": ["popover", "menu", "tooltip", "react"],
+  "keywords": ["popover", "menu", "tooltip", "react", "positioning"],
   "license": "MIT",
   "author" : "Robert Menke",
   "repository" : "https://github.com/RobertMenke/react-popover",
@@ -55,7 +55,9 @@
     "babel-plugin-transform-flow-strip-types": "^6.22.0"
   },
   "scripts": {
-    "start": "webpack --progress --watch"
+    "start": "webpack --progress --watch",
+    "build-example" : "webpack --config example.webpack.config.js --progress --watch",
+    "test": "jest"
   },
   "babel": {
     "presets": [
