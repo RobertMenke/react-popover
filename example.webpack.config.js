@@ -1,29 +1,28 @@
 /**
  * Created by rbmenke on 1/19/17.
  */
-const webpack = require("webpack")
-const path    = require('path')
-const is_production = true
+const webpack       = require( "webpack" )
+const glob          = require( "glob" )
+const path          = require('path')
+const is_production = false
 
 process.env.NODE_ENV = is_production ? "production" : "development"
 process.env.BABEL_ENV = is_production ? "production" : "development"
 
-const lib_entry = {
-    Popover: './src/Popover.js'
+const example_entry = {
+    bundle: './example/index.js'
 }
 
-const lib_output = {
-    path    : path.join(__dirname, './dist/'),
-    filename: '[name].js',
-    libraryTarget: "umd"
+const example_output = {
+    path    : path.join(__dirname, './example/'),
+    filename: '[name].js'
 }
 
 
 const dev_plugins = [
     new webpack.DefinePlugin({
         'process.env' : {
-            NODE_ENV : JSON.stringify('development'),
-            BABEL_ENV : JSON.stringify('development')
+            NODE_ENV : JSON.stringify('development')
         }
     })
 ]
@@ -31,8 +30,7 @@ const dev_plugins = [
 const prod_plugins = [
     new webpack.DefinePlugin({
         'process.env' : {
-            NODE_ENV : JSON.stringify('production'),
-            BABEL_ENV : JSON.stringify('production')
+            NODE_ENV : JSON.stringify('production')
         }
     }),
     new webpack.optimize.UglifyJsPlugin( {
@@ -44,9 +42,10 @@ const prod_plugins = [
 
 
 module.exports = {
-    entry    : lib_entry,
-    output   : lib_output,
-    devtool  : is_production ? '#inline-source-map' : false,
+    entry    : example_entry,
+    cache    : true,
+    output   : example_output,
+    devtool  : '#inline-source-map',
     module   : {
         rules : [
             {
@@ -63,7 +62,5 @@ module.exports = {
             }
         ]
     },
-    target : "web",
-    externals: ["react", "react-dom"],
     plugins  : is_production ? prod_plugins : dev_plugins
 }
