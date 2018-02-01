@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
-import { isDOMRect } from './utils'
+import { isDOMRect, getBoundingClientRectForElement } from './utils'
 
 type Props = {
     element : HTMLElement,
@@ -427,8 +427,8 @@ export default class Popover extends Component {
         this.setState( {
             element     : props.element,
             parent      : props.parent,
-            element_rect: props.element.getBoundingClientRect(),
-            parent_rect : props.parent.getBoundingClientRect(),
+            element_rect: getBoundingClientRectForElement(props.element),
+            parent_rect : getBoundingClientRectForElement(props.parent),
             classes     : this.getClassNames(),
             open        : props.open,
             top_cushion : props.top_cushion || 0,
