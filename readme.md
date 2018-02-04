@@ -102,3 +102,13 @@ type Props = {
 For obvious reasons:
 - React
 - React DOM
+
+# Webpack build instructions
+
+I use one webpack configuration to build the library and a second configuration to build out the example.
+
+Building the library: `npm start`
+
+Building the example: `npm run build-example`
+
+Both `example.webpack.config.js` and `webpack.config.js` define a variable called `is_production` at the top of the file. This variable controls which plugins get loaded. It may be helpful while developing to set this variable to false in order to use source maps in the browser.
