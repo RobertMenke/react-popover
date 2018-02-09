@@ -63,13 +63,13 @@ describe('verifying dom rect', () => {
 })
 
 describe('verifying getBoundingClientRectForElement', () => {
-    test('getBoundingClientRectForElement will return an empty object when the element is null', () => {
+    test('getBoundingClientRectForElement throws an error when the element is null', () => {
       expect(() => {
         getBoundingClientRectForElement(null)
       }).toThrow()
     })
 
-    test('getBoundingClientRectForElement will return an empty object when the element is undefined', () => {
+    test('getBoundingClientRectForElement throws an error when the element is undefined', () => {
       expect(() => {
         getBoundingClientRectForElement(undefined)
       }).toThrow()
