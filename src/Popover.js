@@ -419,16 +419,50 @@ export default class Popover extends Component {
     }
 
     /**
+    * Tries to return
+    * @param parent
+    * @param element
+    * @return {{ parent_rect: DOMRect, element_rect: DOMRect }}
+    */
+    updateParentAndElementRectangles (parent, element) : Object {
+      let parent_rect = null;
+      let element_rect = null;
+
+      try {
+        parent_rect = getBoundingClientRectForElement(parent);
+      } catch (e) { }
+      try {
+        element_rect = getBoundingClientRectForElement(element);
+      } catch (e) { }
+
+      const errorSuffix = "not an instanceof HTMLElement or a React component."
+      if (parent_rect == null && element_rect == null) {
+        throw new TypeError(`Both props.parent and props.element are ${errorSuffix}`);
+      } else if (parent_rect == null) {
+        throw new TypeError(`props.parent is ${errorSuffix}`);
+      } else if (element_rect == null) {
+        throw new TypeError(`props.element is ${errorSuffix}`);
+      }
+
+      return {
+        parent_rect,
+        element_rect
+      }
+    }
+
+    /**
      * Update all of our state when the next props are ready
      *
      * @param props
      */
     componentWillReceiveProps ( props : Props ) {
+        const { parent_rect, element_rect } = this.updateParentAndElementRectangles(props.parent, props.element);
+
         this.setState( {
             element     : props.element,
             parent      : props.parent,
-            element_rect: getBoundingClientRectForElement(props.element),
-            parent_rect : getBoundingClientRectForElement(props.parent),
+            element_rect: element_rect,
+            parent_rect : parent_rect,
             classes     : this.getClassNames(),
             open        : props.open,
             top_cushion : props.top_cushion || 0,
