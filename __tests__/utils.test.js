@@ -64,11 +64,15 @@ describe('verifying dom rect', () => {
 
 describe('verifying getBoundingClientRectForElement', () => {
     test('getBoundingClientRectForElement will return an empty object when the element is null', () => {
-      expect(getBoundingClientRectForElement(null)).toEqual({});
+      expect(() => {
+        getBoundingClientRectForElement(null)
+      }).toThrow()
     })
 
     test('getBoundingClientRectForElement will return an empty object when the element is undefined', () => {
-      expect(getBoundingClientRectForElement(undefined)).toEqual({});
+      expect(() => {
+        getBoundingClientRectForElement(undefined)
+      }).toThrow()
     })
 
     test('getBoundingClientRectForElement will return a valid DOMRect for native elements', () => {

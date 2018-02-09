@@ -47,5 +47,5 @@ export const getBoundingClientRectForElement = element => {
     }
   }
 
-  return {};
+  throw new TypeError("element is not an instanceof HTMLElement or a React component");
 }
